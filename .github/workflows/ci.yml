@@ -9,10 +9,10 @@ jobs:
   build-resources:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout self
-        uses: actions/checkout@v4
-        with:
-          path: 'self'
+    - name: checkout self
+      uses: actions/checkout@v4
+      with:
+        path: 'self'
 
     - name: setup dotnet
       uses: actions/setup-dotnet@v4
