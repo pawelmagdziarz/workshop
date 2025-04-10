@@ -1,0 +1,28 @@
+name: cd
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ 'main' ]
+  
+jobs:
+  build-resources:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout self
+        uses: actions/checkout@v4
+        with:
+          path: 'self'
+
+    - name: setup dotnet
+      uses: actions/setup-dotnet@v4
+
+    - name: 'build artifact'
+      shell: pwsh
+      run: |
+        dir "'*.ConsoleApp.csproj'" -Recurse | %{dotnet build --configuration Release --output "publish-outuput" $PSItem.FullName}
+
+    - name: 'upload artifact'
+      uses: actions/upload-artifact@v4
+      with:
+        path: 'publish-outuput'
